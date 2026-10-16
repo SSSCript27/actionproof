@@ -20,7 +20,7 @@ export default function Landing() {
               });
             }}
           >
-            How it works
+            Execution model
           </a>
           <a href="#/docs">Documentation</a>
           <a
@@ -40,16 +40,17 @@ export default function Landing() {
         <section className="landing-hero">
           <div className="hero-wording">
             <div className="eyebrow">
-              <span className="live-dot" /> EXECUTION EVIDENCE FOR AI AGENTS
+              <span className="live-dot" /> AGENT ACTIONS / TRACE THE WRITE
             </div>
             <h1>
               A timeout isn’t
               <br />
-              an outcome.
+              an <em>outcome.</em>
             </h1>
             <p className="hero-description">
-              Your agent made a request. Did the system actually change? Record
-              the intent, approve the action, and recover with evidence.
+              The agent sent a write. The connection dropped. Before it tries
+              again, find out what actually happened. Keep the payload, human
+              approval, dispatch, and provider evidence in one execution record.
             </p>
             <div className="hero-buttons">
               <a className="button green" href="#/overview">
@@ -59,7 +60,7 @@ export default function Landing() {
                 <Icon name="arrow" />
               </a>
               <a className="button subtle" href="#/docs">
-                Self-host in minutes <Icon name="terminal" />
+                Run it yourself <Icon name="terminal" />
               </a>
             </div>
             <div className="hero-assurances">
@@ -80,42 +81,68 @@ export default function Landing() {
           <div className="hero-proof">
             <div className="proof-top">
               <span>
-                <i /> OPERATION / CREATE ISSUE
+                <i /> recovery.trace
               </span>
-              <span className="mono">Illustrative incident</span>
+              <span className="mono">ILLUSTRATIVE / GITHUB</span>
             </div>
             <div className="proof-code">
-              <span className="code-comment">
-                // Intent committed before dispatch
-              </span>
-              <br />
-              <span className="code-key">idempotency_key</span>:{" "}
-              <span className="code-string">"support-case-1842"</span>
-              <br />
-              <span className="code-key">target</span>:{" "}
-              <span className="code-string">"acme/platform"</span>
+              <div className="code-line">
+                <span className="code-line-number" aria-hidden="true">
+                  01
+                </span>
+                <span className="code-comment">
+                  // Record intent before touching the API.
+                </span>
+              </div>
+              <div className="code-line">
+                <span className="code-line-number" aria-hidden="true">
+                  02
+                </span>
+                <span>
+                  <span className="code-key">idempotencyKey</span>:{" "}
+                  <span className="code-string">"support-case-1842"</span>
+                </span>
+              </div>
+              <div className="code-line">
+                <span className="code-line-number" aria-hidden="true">
+                  03
+                </span>
+                <span>
+                  <span className="code-key">repo</span>:{" "}
+                  <span className="code-string">"acme/platform"</span>
+                </span>
+              </div>
+              <div className="code-line">
+                <span className="code-line-number" aria-hidden="true">
+                  04
+                </span>
+                <span>
+                  <span className="code-key">status</span>:{" "}
+                  <span className="code-warning">"unknown"</span>
+                </span>
+              </div>
             </div>
             <div className="proof-path">
               <div>
                 <b className="proof-node good">
                   <Icon name="check" />
                 </b>
-                <span>Intent recorded</span>
-                <small>Exact payload stored</small>
+                <span>intent.commit</span>
+                <small>Payload persisted</small>
               </div>
               <i />
               <div>
                 <b className="proof-node good">
                   <Icon name="check" />
                 </b>
-                <span>Action approved</span>
-                <small>Hash-bound approval</small>
+                <span>human.approve</span>
+                <small>Payload hash matched</small>
               </div>
               <i />
               <div>
                 <b className="proof-node uncertain">?</b>
-                <span>Response lost</span>
-                <small>Outcome unknown</small>
+                <span>dispatch.write</span>
+                <small>Response lost</small>
               </div>
             </div>
             <div className="proof-resolution">
@@ -123,58 +150,60 @@ export default function Landing() {
                 <Icon name="shield" />
               </span>
               <div>
-                <strong>Verify before repeating.</strong>
+                <strong>Read the evidence. Then decide.</strong>
                 <p>
-                  Read the provider record. Recover the receipt. Keep one issue.
+                  Reconciliation finds the existing issue. The record becomes
+                  verified without another write.
                 </p>
               </div>
               <span className="verified-pill">RECONCILED</span>
             </div>
             <div className="proof-footer">
-              <span>REQUEST STATUS ≠ BUSINESS OUTCOME</span>
+              <span>HTTP RESPONSE ≠ SIDE EFFECT</span>
               <Icon name="activity" size={16} />
             </div>
           </div>
         </section>
         <section className="landing-strip">
-          <span>BUILT FOR THE WRITE BOUNDARY</span>
+          <span>THE WRITE BOUNDARY</span>
           <p>
-            For platform teams moving agents from answering questions to
-            changing systems.
+            Model output becomes operational risk the moment an agent can change
+            a system. That boundary deserves a record.
           </p>
           <Icon name="arrow" size={28} />
         </section>
         <section className="landing-section" id="how-it-works">
           <div className="section-intro">
-            <p className="eyebrow">ONE ACTION. A COMPLETE RECORD.</p>
+            <p className="eyebrow">INTENT → APPROVAL → DISPATCH → EVIDENCE</p>
             <h2>
               Make the uncertain
               <br />
               part visible.
             </h2>
             <p>
-              ActionProof sits between the agent and the connector. It keeps the
-              execution record outside the model’s conversation.
+              A conversation is a poor execution ledger. ActionProof stores the
+              action independently, so a lost response or restarted process does
+              not erase what was dispatched.
             </p>
           </div>
           <div className="feature-columns">
             {[
               [
                 "01",
-                "Approve the actual action",
-                "Review the repository, title, and body. Approval is bound to the stored payload and expires after 30 minutes.",
+                "Review the exact payload",
+                "Repository, title, body. Review the stored intent before execution. Approval is bound to its hash and expires after 30 minutes.",
                 "shield",
               ],
               [
                 "02",
-                "Remember across failures",
-                "A durable record survives process restarts. A claimed dispatch is never automatically repeated after an uncertain outcome.",
+                "Commit before dispatch",
+                "The dispatch claim is persisted before the connector writes. If the process loses the outcome, the operation needs reconciliation. It is not automatically sent again.",
                 "clock",
               ],
               [
                 "03",
-                "Reconcile with the provider",
-                "Read an existing provider record to verify what happened. A missing match stays unresolved, rather than becoming permission to retry.",
+                "Ask the system that changed",
+                "Read the provider record and attach the evidence. If no match is found, the outcome stays unresolved. Absence of a match does not prove the write failed.",
                 "check",
               ],
             ].map(([n, title, text, icon]) => (
@@ -191,31 +220,31 @@ export default function Landing() {
         </section>
         <section className="landing-usecase">
           <div>
-            <p className="eyebrow">START WITH ONE WORKFLOW</p>
+            <p className="eyebrow">CONNECTOR / GITHUB ISSUES</p>
             <h2>
-              An engineering ticket.
-              <br />
-              Created once. Accounted for.
+              One ticket.
+              <br />A trace you can inspect.
             </h2>
             <p>
-              The first connector creates GitHub issues in one explicitly
-              configured repository. Simulate a lost response, then reconcile
-              the existing issue without dispatching another write.
+              Scope the connector to one GitHub repository. Propose an issue,
+              approve its payload, then execute. In the sandbox, lose the
+              response on purpose and recover the existing issue from provider
+              evidence.
             </p>
             <a href="#/overview" className="text-link">
-              Walk through the incident <Icon name="arrow" />
+              Run the failure drill <Icon name="arrow" />
             </a>
           </div>
           <div className="connector-art">
             <div className="connector-label">
               <Icon name="terminal" />
-              Your agent
+              Agent / SDK / MCP
             </div>
             <div className="connector-wire" />
             <div className="connector-center">
               <Mark />
               <b>ActionProof</b>
-              <span>Intent · Approval · Receipt</span>
+              <span>intent → approval → receipt</span>
             </div>
             <div className="connector-wire" />
             <div className="connector-label">
@@ -226,23 +255,24 @@ export default function Landing() {
         </section>
         <section className="landing-section deployment-section">
           <div>
-            <p className="eyebrow">SMALL FOOTPRINT. CLEAR BOUNDARIES.</p>
+            <p className="eyebrow">SELF-HOSTED / INSPECTABLE / MIT</p>
             <h2>
-              Run it where
+              Your runtime.
               <br />
-              your work lives.
+              Your execution records.
             </h2>
             <p>
-              One self-hosted service, SQLite persistence, a browser console, a
-              JavaScript client, and an MCP server. Start with Docker. Keep
-              connector credentials on your server.
+              A Node.js service with SQLite persistence, a browser console, a
+              JavaScript client, and an MCP server. Run it with Docker.
+              Connector credentials stay on your server; approval stays with the
+              person reviewing the action.
             </p>
             <a className="button dark" href="#/docs">
               Get the installation guide <Icon name="arrow" />
             </a>
           </div>
           <aside>
-            <h3>What this release promises</h3>
+            <h3>Inside the v0.1 boundary</h3>
             <ul>
               <li>
                 <Icon name="check" />
@@ -253,7 +283,8 @@ export default function Landing() {
                 Human approval before execution
               </li>
               <li>
-                <Icon name="check" />A concrete receipt or an explicit unknown
+                <Icon name="check" />
+                Provider evidence or an explicit unknown
               </li>
               <li>
                 <Icon name="check" />A locally runnable failure-and-recovery
@@ -269,11 +300,11 @@ export default function Landing() {
         </section>
         <section className="landing-cta">
           <div>
-            <p className="eyebrow">NO BLACK BOX REQUIRED</p>
+            <p className="eyebrow">BREAK THE RESPONSE. INSPECT THE TRACE.</p>
             <h2>
-              See the failure.
+              Create the uncertainty.
               <br />
-              Then see the recovery.
+              Follow the evidence.
             </h2>
           </div>
           <a href="#/overview" className="button green">

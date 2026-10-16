@@ -1,6 +1,7 @@
+@import "./fonts.css";
+
 :root {
   font-family:
-    Inter,
     ui-sans-serif,
     -apple-system,
     BlinkMacSystemFont,
@@ -15,6 +16,7 @@
   --green: #c5efaa;
   --forest: #245944;
   --nav: #111e2d;
+  text-rendering: optimizeLegibility;
 }
 * {
   box-sizing: border-box;
@@ -90,7 +92,27 @@ pre,
 .eyebrow,
 .page-eyebrow,
 .nav-group-label {
-  font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+  font-family: var(--font-mono);
+}
+h1,
+h2,
+h3,
+h4,
+.brand,
+.button,
+.connector-center b {
+  font-family: var(--font-display);
+}
+.metric > strong,
+.repo-name,
+.status-badge,
+.operations-table th,
+.operation-meta,
+.timeline-title time,
+.connector-label,
+.connector-center span:last-child {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
 }
 .tiny {
   font-size: 12px;
@@ -114,7 +136,7 @@ pre,
   gap: 10px;
   font-size: 22px;
   letter-spacing: -0.7px;
-  font-weight: 650;
+  font-weight: 600;
   text-decoration: none;
 }
 .mark {
@@ -132,7 +154,7 @@ pre,
   gap: 10px;
   padding: 12px 17px;
   border: 1px solid transparent;
-  border-radius: 7px;
+  border-radius: 5px;
   font-size: 13px;
   font-weight: 600;
   text-decoration: none;
@@ -223,7 +245,7 @@ pre,
   box-shadow: 0 0 0 3px #9ac77e12;
 }
 .version {
-  font: 11px monospace;
+  font: 11px var(--font-mono);
   letter-spacing: 0;
   color: #758276;
   background: #e5eade;
@@ -259,7 +281,7 @@ pre,
 }
 /* Product introduction */
 .marketing {
-  background: #f4f5ef;
+  background: #f5f4eb;
   color: #1d3029;
 }
 .marketing-nav {
@@ -269,6 +291,7 @@ pre,
   display: flex;
   align-items: center;
   justify-content: space-between;
+  border-bottom: 1px solid #253f2a17;
 }
 .marketing-nav nav {
   display: flex;
@@ -276,7 +299,8 @@ pre,
   gap: 29px;
 }
 .marketing-nav nav > a:not(.button) {
-  font-size: 13px;
+  font-family: var(--font-mono);
+  font-size: 11px;
   text-decoration: none;
 }
 .marketing-nav nav > a:hover {
@@ -291,6 +315,9 @@ pre,
   gap: 55px;
   padding: 75px 5% 95px;
   align-items: center;
+  background-image: radial-gradient(#52654822 0.65px, transparent 0.65px);
+  background-size: 19px 19px;
+  background-position: 6px 6px;
 }
 .hero-wording .eyebrow {
   display: flex;
@@ -301,14 +328,22 @@ pre,
 .hero-wording h1 {
   font-size: clamp(50px, 5.6vw, 81px);
   line-height: 1.03;
-  font-weight: 500;
-  letter-spacing: -4.5px;
+  font-weight: 600;
+  letter-spacing: -0.065em;
   margin: 25px 0;
+}
+.hero-wording h1 em {
+  font-style: normal;
+  color: #406447;
+  text-decoration: underline;
+  text-decoration-color: #c2cfae;
+  text-decoration-thickness: 3px;
+  text-underline-offset: 8px;
 }
 .hero-description {
   font-size: 16px;
   line-height: 1.85;
-  color: #667266;
+  color: #53634f;
   max-width: 430px;
 }
 .hero-buttons {
@@ -321,7 +356,8 @@ pre,
   display: flex;
   gap: 20px;
   color: #65705e;
-  font-size: 12px;
+  font-family: var(--font-mono);
+  font-size: 10px;
   flex-wrap: wrap;
 }
 .hero-assurances span {
@@ -330,11 +366,13 @@ pre,
   gap: 5px;
 }
 .hero-proof {
-  background: #182638;
+  background: #182b27;
   color: #dce7e9;
-  border: 1px solid #2c3d4a;
-  border-radius: 12px;
-  box-shadow: 0 25px 65px #233e2820;
+  border: 1px solid #314940;
+  border-radius: 8px;
+  box-shadow:
+    7px 7px 0 #1b392314,
+    0 18px 45px #233e2814;
   position: relative;
   overflow: hidden;
 }
@@ -345,8 +383,9 @@ pre,
   gap: 10px;
   padding: 19px 21px;
   border-bottom: 1px solid #ffffff10;
-  font: 10px monospace;
-  letter-spacing: 1px;
+  font: 10px var(--font-mono);
+  letter-spacing: 0.4px;
+  background: #ffffff04;
 }
 .proof-top > span:first-child {
   display: flex;
@@ -360,23 +399,42 @@ pre,
   background: #bce7a3;
 }
 .proof-top > span:last-child {
-  color: #8293a5;
+  color: #a0b5a9;
   letter-spacing: 0;
 }
 .proof-code {
-  font: 13px/2.2 monospace;
-  padding: 24px 24px 27px;
+  font: 12px/2.2 var(--font-mono);
+  padding: 23px 21px 25px;
   background: linear-gradient(140deg, #ffffff03, transparent);
   border-bottom: 1px solid #ffffff0b;
 }
+.code-line {
+  display: flex;
+  align-items: baseline;
+  gap: 17px;
+  min-width: 0;
+}
+.code-line > span:last-child {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+.code-line-number {
+  color: #526b5e;
+  font-size: 10px;
+  flex: 0 0 16px;
+  user-select: none;
+}
 .code-comment {
-  color: #778d9f;
+  color: #90aa99;
 }
 .code-key {
-  color: #9aacc5;
+  color: #b5c9c6;
 }
 .code-string {
   color: #c1deb0;
+}
+.code-warning {
+  color: #eac68e;
 }
 .proof-path {
   display: flex;
@@ -417,13 +475,13 @@ pre,
   margin-top: 16px;
 }
 .proof-path span {
-  font-size: 12px;
+  font: 10px var(--font-mono);
   margin: 13px 0 7px;
   white-space: nowrap;
 }
 .proof-path small {
   font-size: 11px;
-  color: #8a9bab;
+  color: #9eb3a7;
   text-align: center;
   line-height: 1.6;
 }
@@ -438,18 +496,19 @@ pre,
   gap: 13px;
 }
 .proof-resolution strong {
-  font-size: 13px;
-  font-weight: 550;
+  font-family: var(--font-display);
+  font-size: 14px;
+  font-weight: 500;
 }
 .proof-resolution p {
   font-size: 12px;
-  color: #91a49e;
+  color: #a2b5a8;
   margin: 6px 0 0;
   line-height: 1.7;
   max-width: 245px;
 }
 .verified-pill {
-  font: 10px monospace;
+  font: 9px var(--font-mono);
   letter-spacing: 1px;
   color: #bee8a7;
   border: 1px solid #5a7950;
@@ -463,8 +522,8 @@ pre,
   display: flex;
   align-items: center;
   justify-content: space-between;
-  color: #809489;
-  font: 10px monospace;
+  color: #a1b8a8;
+  font: 9px var(--font-mono);
   letter-spacing: 1.5px;
 }
 .landing-strip {
@@ -478,7 +537,7 @@ pre,
   gap: 30px;
 }
 .landing-strip > span {
-  font: 11px monospace;
+  font: 11px var(--font-mono);
   letter-spacing: 1.4px;
   white-space: nowrap;
   color: #75816c;
@@ -506,7 +565,7 @@ pre,
 .landing-usecase h2,
 .landing-cta h2 {
   font-size: 43px;
-  font-weight: 450;
+  font-weight: 500;
   line-height: 1.15;
   letter-spacing: -1.9px;
   margin: 16px 0 25px;
@@ -528,12 +587,16 @@ pre,
 .feature-columns article {
   border-top: 1px solid #cbd4c2;
   padding-top: 23px;
+  transition: border-color 0.2s;
+}
+.feature-columns article:hover {
+  border-top-color: #4a6c4a;
 }
 .feature-number {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  font: 12px monospace;
+  font: 12px var(--font-mono);
   color: #6c7f62;
 }
 .feature-columns h3 {
@@ -807,7 +870,7 @@ pre,
   border-radius: 4px;
   min-width: 18px;
   padding: 2px 5px;
-  font: 11px monospace;
+  font: 11px var(--font-mono);
   margin-left: auto;
   text-align: center;
 }
@@ -822,13 +885,13 @@ pre,
   gap: 7px;
 }
 .deployment-badge > span:nth-child(2) {
-  font: 10px monospace;
+  font: 10px var(--font-mono);
   letter-spacing: 0.7px;
   color: #71879d;
 }
 .deployment-badge small {
   margin-left: auto;
-  font: 10px monospace;
+  font: 10px var(--font-mono);
   color: #556d85;
 }
 .profile {
@@ -912,7 +975,7 @@ pre,
   gap: 24px;
 }
 .environment-pill {
-  font: 10px monospace;
+  font: 10px var(--font-mono);
   letter-spacing: 1px;
   color: #789077;
   display: flex;
@@ -1652,12 +1715,12 @@ label > small {
   display: flex;
   align-items: center;
   gap: 8px;
-  font: 10px monospace;
+  font: 10px var(--font-mono);
   letter-spacing: 1.4px;
   color: #8da57a;
 }
 .provider-receipt h3 {
-  font: 14px/1.7 monospace;
+  font: 14px/1.7 var(--font-mono);
   color: #607954;
   overflow-wrap: anywhere;
   margin: 21px 0 10px;
@@ -2057,7 +2120,7 @@ label > small {
   scroll-margin-top: 25px;
 }
 .step-label {
-  font: 10px monospace;
+  font: 10px var(--font-mono);
   letter-spacing: 1.4px;
   color: #a2b296;
 }
@@ -2134,7 +2197,7 @@ label > small {
   background: #f0f5eb;
 }
 .lifecycle span {
-  font: 11px monospace;
+  font: 11px var(--font-mono);
   color: #8b9e7e;
 }
 .lifecycle svg {
@@ -2369,7 +2432,7 @@ label > small {
     display: none;
   }
   .proof-path span {
-    font-size: 12px;
+    font-size: 10px;
   }
   .settings-grid {
     grid-template-columns: minmax(0, 1fr) 260px;
@@ -2490,7 +2553,7 @@ label > small {
     min-width: 110px;
   }
   .proof-path span {
-    font-size: 13px;
+    font-size: 11px;
   }
   .proof-path small {
     font-size: 12px;
@@ -2953,8 +3016,8 @@ label > small {
     gap: 38px;
   }
   .hero-wording h1 {
-    font-size: 57px;
-    letter-spacing: -2.8px;
+    font-size: clamp(42px, 12vw, 57px);
+    letter-spacing: -0.06em;
     margin: 22px 0;
   }
   .hero-wording .eyebrow {
@@ -2982,15 +3045,18 @@ label > small {
   }
   .proof-top {
     padding: 15px;
-    font-size: 10px;
-    letter-spacing: 0.6px;
+    font-size: 9px;
+    letter-spacing: 0;
   }
   .proof-top > span:last-child {
-    font-size: 10px;
+    font-size: 8px;
   }
   .proof-code {
     padding: 20px 15px;
-    font-size: 12px;
+    font-size: 11px;
+  }
+  .code-line {
+    gap: 10px;
   }
   .proof-path {
     padding: 21px 12px;
@@ -3000,7 +3066,7 @@ label > small {
     min-width: 78px;
   }
   .proof-path span {
-    font-size: 11px;
+    font-size: 9px;
     margin: 10px 0 5px;
   }
   .proof-path small {
@@ -3033,7 +3099,7 @@ label > small {
     display: none;
   }
   .proof-footer {
-    font-size: 6px;
+    font-size: 8px;
     padding: 13px 15px;
     letter-spacing: 1px;
   }
