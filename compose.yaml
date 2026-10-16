@@ -1,0 +1,22 @@
+services:
+  actionproof:
+    build: .
+    ports:
+      - "127.0.0.1:4310:4310"
+    environment:
+      APP_SECRET: ${APP_SECRET:?Run npm run setup first}
+      BOOTSTRAP_TOKEN: ${BOOTSTRAP_TOKEN:?Run npm run setup first}
+      PUBLIC_ORIGIN: ${PUBLIC_ORIGIN:-http://localhost:4310}
+      HOST: 0.0.0.0
+      DATABASE_PATH: /data/actionproof.sqlite
+    volumes:
+      - actionproof-data:/data
+    restart: unless-stopped
+    init: true
+    read_only: true
+    tmpfs:
+      - /tmp
+    security_opt:
+      - no-new-privileges:true
+volumes:
+  actionproof-data:

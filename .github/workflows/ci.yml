@@ -1,0 +1,26 @@
+name: Validate ActionProof
+on:
+  push:
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - run: npm test
+      - run: npm run build
+      - run: npm run build:sandbox
+      - run: docker build -t actionproof:ci .
+      - name: Container smoke test
+        run: |
+          docker run -d --name actionproof-test -p 4310:4310 -e APP_SECRET=ci-only-synthetic-secret-with-more-than-32-characters -e BOOTSTRAP_TOKEN=ci-only-bootstrap -e PUBLIC_ORIGIN=http://localhost:4310 actionproof:ci
+          for i in $(seq 1 30); do curl --fail http://localhost:4310/healthz && exit 0; sleep 1; done
+          docker logs actionproof-test
+          exit 1

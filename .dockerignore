@@ -1,0 +1,11 @@
+node_modules
+dist
+sandbox-dist
+.env
+.env.*
+data
+work
+backups
+.git
+tests
+*.zip
