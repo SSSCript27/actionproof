@@ -20,7 +20,15 @@ jobs:
       - run: docker build -t actionproof:ci .
       - name: Container smoke test
         run: |
-          docker run -d --name actionproof-test -p 4310:4310 -e APP_SECRET=ci-only-synthetic-secret-with-more-than-32-characters -e BOOTSTRAP_TOKEN=ci-only-bootstrap -e PUBLIC_ORIGIN=http://localhost:4310 actionproof:ci
+          docker run -d --name actionproof-test -p 4310:4310 -v actionproof-test-data:/data -e APP_SECRET=ci-only-synthetic-secret-with-more-than-32-characters -e BOOTSTRAP_TOKEN=ci-only-bootstrap -e PUBLIC_ORIGIN=http://localhost:4310 actionproof:ci
           for i in $(seq 1 30); do curl --fail http://localhost:4310/healthz && exit 0; sleep 1; done
           docker logs actionproof-test
           exit 1
+      - name: Container approval and recovery workflow
+        run: node tests/container-smoke.mjs
+      - name: Container recreation preserves evidence
+        run: |
+          docker rm -f actionproof-test
+          docker run -d --name actionproof-test -p 4310:4310 -v actionproof-test-data:/data -e APP_SECRET=ci-only-synthetic-secret-with-more-than-32-characters -e BOOTSTRAP_TOKEN=ci-only-bootstrap -e PUBLIC_ORIGIN=http://localhost:4310 actionproof:ci
+          for i in $(seq 1 30); do if curl --fail http://localhost:4310/healthz; then break; fi; sleep 1; done
+          node tests/container-smoke.mjs verify

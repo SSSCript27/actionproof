@@ -15,7 +15,15 @@ const fresh = () => ({
 });
 function read() {
   try {
-    return JSON.parse(localStorage.getItem(KEY)) || fresh();
+    const state = JSON.parse(localStorage.getItem(KEY));
+    return state &&
+      Array.isArray(state.operations) &&
+      Array.isArray(state.effects) &&
+      Array.isArray(state.events) &&
+      state.workspace &&
+      typeof state.workspace.name === "string"
+      ? state
+      : fresh();
   } catch {
     return fresh();
   }

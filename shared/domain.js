@@ -17,6 +17,13 @@ export function fail(status, message) {
   e.status = status;
   throw e;
 }
+export function validRepository(value) {
+  return (
+    typeof value === "string" &&
+    /^[A-Za-z0-9][A-Za-z0-9-]{0,38}\/[A-Za-z0-9_.-]{1,100}$/.test(value) &&
+    ![".", ".."].includes(value.split("/")[1])
+  );
+}
 export function intent(input) {
   if (!input || typeof input !== "object" || Array.isArray(input))
     fail(400, "Provide an operation object.");
@@ -24,8 +31,7 @@ export function intent(input) {
   if (!["sandbox", "github"].includes(connector))
     fail(400, "Choose sandbox or GitHub.");
   const repo = String(input.repo || "").trim();
-  if (!/^[A-Za-z0-9_.-]{1,100}\/[A-Za-z0-9_.-]{1,100}$/.test(repo))
-    fail(400, "Use an owner/repository identifier.");
+  if (!validRepository(repo)) fail(400, "Use an owner/repository identifier.");
   const title = String(input.title || "").trim(),
     body = String(input.body || "");
   if (!title || title.length > 200)

@@ -5,7 +5,7 @@ import {
   createDecipheriv,
   randomBytes,
 } from "node:crypto";
-import { intent, payloadOf, fail } from "../shared/domain.js";
+import { intent, payloadOf, fail, validRepository } from "../shared/domain.js";
 import { githubProvider, Uncertain, Rejected } from "./providers.mjs";
 export const digest = (v) => createHash("sha256").update(v).digest("hex");
 export function engine(
@@ -177,14 +177,12 @@ export function engine(
       : { id: "github", configured: false };
   }
   function configure(input, actor) {
-    if (
-      !/^[A-Za-z0-9_.-]{1,100}\/[A-Za-z0-9_.-]{1,100}$/.test(input.repo || "")
-    )
-      fail(400, "Use owner/repository.");
+    if (!validRepository(input.repo)) fail(400, "Use owner/repository.");
     if (
       typeof input.token !== "string" ||
       input.token.length < 10 ||
-      input.token.length > 500
+      input.token.length > 500 ||
+      /[\r\n\x00-\x1f]/.test(input.token)
     )
       fail(400, "Provide a GitHub token.");
     db.prepare(
